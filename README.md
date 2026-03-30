@@ -1,7 +1,5 @@
 # UART Verification Environment using UVM
 
-This repository contains a robust **Design Verification (DV)** environment for a **Serial Peripheral Interface (UART)** module. The project was developed as part of the curriculum at the **University of Information Technology (UIT)** in collaboration with **Tresemi**.
-
 ---
 
 ## 🚀 Project Overview
@@ -11,7 +9,7 @@ The goal of this project is to verify the functionality and protocol compliance 
 * **Language:** SystemVerilog
 * **Methodology:** UVM 1.2 | 1.1d
 * **Simulator:** Compatible with Siemens QuestaSim / Cadence Xcelium
-* **Protocol:** UART (Supports configurable CPOL and CPHA)
+* **Protocol:** UART (Simple receiver)
 
 ## 🏗 Testbench Architecture
 The verification environment follows the standard UVM hierarchy:
@@ -21,3 +19,5 @@ The verification environment follows the standard UVM hierarchy:
 * **Agent:** Contains the Sequencer, Driver, and Monitor for the UART interface.
 * **Scoreboard:** Performs data integrity checks by comparing RTL output against a reference model.
 * **Functional Coverage:** Ensures all UART configurations and corner cases are exercised.
+
+
