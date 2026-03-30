@@ -20,4 +20,19 @@ The verification environment follows the standard UVM hierarchy:
 * **Scoreboard:** Performs data integrity checks by comparing RTL output against a reference model.
 * **Functional Coverage:** Ensures all UART configurations and corner cases are exercised.
 
+## 🤖 How to start ?
+* Install Questasim: https://nguyenquanicd.blogspot.com/2017/08/questa-sim-huong-dan-cai-at-va-chay-mo.html
+* Install Makefile:
+* ** Open Command Prompt or PowerShell.
+* ** Run: winget install ezwinports.make
+* ** Restart your shell and check: make --version
+* Install Mingw64
+* Start compiling
+* ** Open Testbench folder
+* ** Open terminal (Mingw64)
+* ** Run:
+* ** ** source env.sh
+* ** ** cd sim
+* ** ** make compile
+* ** ** make run test_name=uart_demo_test 
 
