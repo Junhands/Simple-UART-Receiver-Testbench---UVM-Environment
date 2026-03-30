@@ -1,0 +1,43 @@
+/*
+ * =====================================================
+ * Created on Wed Mar 25 2026
+ * University of Information Technology (UIT)
+ * Copyright (c) 2026 Cong Nguyen
+ * Email: congnguyen1024@gmail.com
+ * =====================================================
+ */
+
+`timescale 1ns/1ps
+
+interface clk_rst_if (output logic clk, output logic rst);
+// pragma attribute clk_rst_if partition_interface_xif
+
+  //
+  // Task to assert rst by a number of clocks given in reset_length
+  //
+	task do_reset (integer reset_length); // pragma tbx xtf
+		rst = 1;
+		repeat (reset_length) @(posedge clk);
+		rst = 0;
+	endtask
+
+  //
+  // Task to wait a num number of clocks
+  //
+	task do_wait(integer num);
+		repeat (num) @(posedge clk);
+	endtask
+	
+  //
+  // Generate clk
+  //
+	initial begin
+		#1;
+		clk = 1;
+		rst = 0;
+		forever begin
+			#100 clk = ~clk;
+		end
+	end
+
+endinterface

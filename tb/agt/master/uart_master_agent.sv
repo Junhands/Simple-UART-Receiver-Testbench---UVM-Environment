@@ -1,0 +1,54 @@
+/*
+ * =====================================================
+ * Created on Fri Mar 27 2026
+ * University of Information Technology (UIT)
+ * Copyright (c) 2026 Cong Nguyen
+ * Email: congnguyen1024@gmail.com
+ * =====================================================
+ */
+
+class uart_master_agent #(type REQ = uvm_sequence_item, type RSP = uvm_sequence_item) extends uvm_agent;
+
+   `uvm_component_param_utils(uart_master_agent #(REQ,RSP))
+
+   string                              my_name;
+
+   typedef uvm_sequencer  #(REQ,RSP)   sequencer_t;
+   typedef uart_driver    #(REQ,RSP)   driver_t;
+
+   sequencer_t                         sequencer;
+   driver_t                            driver;
+
+   uvm_analysis_port#(REQ)             ref_ob_ap;
+   uvm_analysis_port#(REQ)             cov_ap;
+   //
+   // NEW
+   //
+   function new(string name, uvm_component parent);
+      super.new(name,parent);
+      my_name = get_name();
+   endfunction
+   
+   //
+   // BUILD phase
+   // Create sequencer and driver and ports
+   //
+   function void build_phase(uvm_phase phase);
+      super.build_phase(phase);
+      driver    = driver_t::type_id::create("driver",this);
+      sequencer = sequencer_t::type_id::create("sequencer",this);
+      ref_ob_ap = new($psprintf("%s_ref_ob_ap", my_name),this);
+      cov_ap    = new($psprintf("%s_cov_ap", my_name), this);
+   endfunction
+   //
+   // CONNECT phase
+   // Connect sequencer and driver and driver ports
+   //
+   function void connect_phase(uvm_phase phase);
+      super.connect_phase(phase);
+      driver.seq_item_port.connect(sequencer.seq_item_export);
+      driver.ref_ob_ap.connect(ref_ob_ap);
+      driver.cov_ap.connect(cov_ap);
+   endfunction
+
+endclass
