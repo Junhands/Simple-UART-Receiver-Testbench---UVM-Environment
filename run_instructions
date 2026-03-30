@@ -1,4 +1,4 @@
-vsim top -voptargs=+acc +UVM_TESTNAME=spi_demo_test
+vsim top -voptargs=+acc +UVM_TESTNAME=uart_demo_test
 log -r /*
 run -a
 <Select no when prompted>
