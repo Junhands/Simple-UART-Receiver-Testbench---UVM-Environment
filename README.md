@@ -1,38 +1,169 @@
-# UART Verification Environment using UVM
+# UART Receiver Testbench (UVM Environment)
+
+## 📌 Overview
+
+This project implements a **UVM-based testbench** for verifying a UART Receiver design.
+The environment is modular and reusable, following standard UVM architecture.
 
 ---
 
-## 🚀 Project Overview
-The goal of this project is to verify the functionality and protocol compliance of an UART core using the **Universal Verification Methodology (UVM)**. This environment utilizes constrained-random stimulus, functional coverage, and automated scoreboarding to ensure the design meets its specifications.
+## 🗂️ Project Structure
 
-## 🛠 Technical Stack
-* **Language:** SystemVerilog
-* **Methodology:** UVM 1.2 | 1.1d
-* **Simulator:** Compatible with Siemens QuestaSim / Cadence Xcelium
-* **Protocol:** UART (Simple receiver)
+```
+tb/
+├── agt/            # Agent (master/slave components)
+│   ├── master/
+│   └── slave/
+├── cfg/            # Configuration objects
+├── chk/            # Checker / scoreboard
+├── cov/            # Functional coverage
+├── env/            # UVM environment
+├── tlm/            # TLM connections
+└── tst/            # Testcases
+```
 
-## 🏗 Testbench Architecture
-The verification environment follows the standard UVM hierarchy:
-* **Top:** Connects the DUT with the UVM Interface.
-* **Test:** Defines the test scenarios.
-* **Environment:** Encapsulates Agents, Scoreboards, and Virtual Sequencers.
-* **Agent:** Contains the Sequencer, Driver, and Monitor for the UART interface.
-* **Scoreboard:** Performs data integrity checks by comparing RTL output against a reference model.
-* **Functional Coverage:** Ensures all UART configurations and corner cases are exercised.
+---
 
-## 🤖 How to start ?
-* Install Questasim: https://nguyenquanicd.blogspot.com/2017/08/questa-sim-huong-dan-cai-at-va-chay-mo.html
-* Install Makefile:
-* ** Open Command Prompt or PowerShell.
-* ** Run: winget install ezwinports.make
-* ** Restart your shell and check: make --version
-* Install Mingw64
-* Start compiling
-* ** Open Testbench folder
-* ** Open terminal (Mingw64)
-* ** Run:
-* ** ** source env.sh
-* ** ** cd sim
-* ** ** make compile
-* ** ** make run test_name=uart_demo_test 
+## ⚙️ Prerequisites
+
+* SystemVerilog simulator:
+
+  * Siemens QuestaSim
+  * Cadence Xcelium
+* UVM library
+* `make` tool installed
+* Linux / Git Bash / MSYS2 environment
+
+---
+
+## 🚀 Setup
+
+Before running simulation:
+
+```bash
+source env.sh
+cd sim
+```
+
+---
+
+## 🛠️ Build & Run (QuestaSim)
+
+### Compile
+
+```bash
+make compile
+```
+
+### Run test
+
+```bash
+make coverage test_name=uart_demo_test
+```
+
+### Dump coverage
+
+```bash
+vcover dump top.ucdb > log
+```
+
+### Run with GUI
+
+```bash
+make vopt_gui test_name=uart_demo_test
+```
+
+### Run optimized simulation
+
+```bash
+make vopt_run test_name=uart_demo_test
+```
+
+### Run visualization
+
+```bash
+make vis_run test_name=uart_demo_test cmd_args=10
+```
+
+---
+
+## 🛠️ Build & Run (Cadence Xcelium)
+
+### Compile
+
+```bash
+make compile_uart tool=Cadence
+```
+
+### Run test
+
+```bash
+make run test_name=uart_demo_test tool=Cadence
+```
+
+### Coverage
+
+```bash
+make coverage test_name=uart_demo_test tool=Cadence
+```
+
+---
+
+## 📊 Coverage Analysis (Cadence)
+
+Open GUI:
+
+```bash
+imc -gui
+```
+
+Commands:
+
+```
+merge test1 test2 -out all
+load -run all
+report -html/detailsummary-metrics -out path
+```
+
+Or command line:
+
+```bash
+imc -execcmd "merge test1 test2 -out all"
+```
+
+---
+
+## 🧪 Testcases
+
+Example:
+
+* `uart_demo_test` – basic functionality test
+
+(Add more tests in `tb/tst/` directory)
+
+---
+
+## 🧩 Features
+
+* UVM-compliant architecture
+* Modular agent design (master/slave)
+* Functional coverage support
+* Multi-tool support (QuestaSim & Cadence)
+* Scalable for advanced verification scenarios
+
+---
+
+## 📌 Notes
+
+* Ensure environment variables are set correctly via `env.sh`
+* Simulator paths must be configured before running
+* Coverage database (`.ucdb`) is generated after simulation
+
+---
+
+## 👨‍💻 Author
+
+* Cong Thanh Nguyen - University of Information Technology (UIT)
+
+---
 
